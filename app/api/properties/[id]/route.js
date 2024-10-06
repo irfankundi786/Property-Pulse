@@ -11,9 +11,17 @@ export const GET = async (request, { params }) => {
 
     if (!property) return new Response('Property Not Found', { status: 404 });
 
+    // Add CORS headers to allow cross-origin requests
+    const headers = new Headers();
+    headers.set('Access-Control-Allow-Origin', '*'); // Allow all origins, but in production, use a specific domain
+    headers.set('Access-Control-Allow-Methods', 'GET');
+    headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
     return new Response(JSON.stringify(property), {
       status: 200,
+      headers: headers,
     });
+    console.log('this is property = ' + JSON.stringify(property));
   } catch (error) {
     console.log(error);
     return new Response('Something Went Wrong', { status: 500 });
